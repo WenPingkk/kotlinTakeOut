@@ -1,10 +1,15 @@
 package com.wenping.ktolintakeout
 
+import android.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import com.wenping.autoloayout.ktolintakeout.R
+import com.wenping.autoloayout.ktolintakeout.ui.fragment.HomeFragment
+import com.wenping.autoloayout.ktolintakeout.ui.fragment.MoreFragment
+import com.wenping.autoloayout.ktolintakeout.ui.fragment.OrderFragment
+import com.wenping.autoloayout.ktolintakeout.ui.fragment.UserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    val fragments: List<Fragment> = listOf<Fragment>(HomeFragment(),OrderFragment(),UserFragment(),MoreFragment())
+
     private fun initBottomBar() {
 
         for (i in 0 until main_bottom_bar.childCount) {
@@ -24,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                 changeIndex(i)
             }
         }
-
     }
 
     private fun changeIndex(index: Int) {
@@ -38,8 +44,7 @@ class MainActivity : AppCompatActivity() {
                 setEnable(child,true)
             }
         }
-
-
+        fragmentManager.beginTransaction().replace(R.id.main_content,fragments[index]).commit()
     }
 
     private fun setEnable(child: View, isEnable: Boolean) {
