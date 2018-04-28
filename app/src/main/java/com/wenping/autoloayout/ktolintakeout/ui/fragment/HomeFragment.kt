@@ -18,14 +18,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        val view = View.inflate(activity, R.layout.fragment_, null)
-
-        val title = view as TextView
-
-        title.text = "首页"
+        val view = View.inflate(activity, R.layout.fragment_home, null)
 
         return view
     }
-
-
 }
