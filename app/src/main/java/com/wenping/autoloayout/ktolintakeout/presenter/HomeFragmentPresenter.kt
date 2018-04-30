@@ -20,13 +20,15 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Description:
  */
 class HomeFragmentPresenter(val homeFragment: HomeFragment) {
-
+    companion object {
+        val Host = "http://192.168.31.12:"
+    }
     val takeService: TakeService
 
     init {
 
         val retrofit = Retrofit.Builder()
-                .baseUrl("http://192.168.42.193:8080/TakeoutService/")
+                .baseUrl(Host+"8080/TakeoutService/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         takeService = retrofit.create<TakeService>(TakeService::class.java)
