@@ -2,8 +2,8 @@ package com.wenping.ktolintakeout
 
 import android.app.Fragment
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
                     0,0,0,50.dp2px()
             )
         }
-
-
-
         changeIndex(0)
 
         initBottomBar()
@@ -36,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * //这是kotlin的拓展函数
      * 把转化功能添加到Int类中作为扩展函数
      */
     fun Int.dp2px(): Int {
