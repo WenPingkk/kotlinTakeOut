@@ -12,10 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.wenping.autoloayout.ktolintakeout.R
 import com.wenping.autoloayout.ktolintakeout.adapter.HomeAdapter
+import com.wenping.autoloayout.ktolintakeout.dagger2.component.DaggerHomeFragmentComponent
+import com.wenping.autoloayout.ktolintakeout.dagger2.module.HomeFragmentModule
 import com.wenping.autoloayout.ktolintakeout.model.Seller
 import com.wenping.autoloayout.ktolintakeout.presenter.HomeFragmentPresenter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 /**
  * @author WenPing
@@ -32,14 +35,15 @@ class HomeFragment : Fragment() {
     val homeAdapter by lazy {
         HomeAdapter(activity)
     }
+    @Inject
     lateinit var homePresenter: HomeFragmentPresenter
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View = View.inflate(activity, R.layout.fragment_home, null)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homePresenter = HomeFragmentPresenter(this)
-
+//        homePresenter = HomeFragmentPresenter(this)
+        DaggerHomeFragmentComponent.builder().homeFragmentModule(HomeFragmentModule(this)).build().inject(this)
         rv_home.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = homeAdapter
