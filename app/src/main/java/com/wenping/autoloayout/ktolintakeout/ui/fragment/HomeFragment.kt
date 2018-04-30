@@ -12,7 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.wenping.autoloayout.ktolintakeout.R
 import com.wenping.autoloayout.ktolintakeout.adapter.HomeAdapter
+import com.wenping.autoloayout.ktolintakeout.model.Seller
+import com.wenping.autoloayout.ktolintakeout.presenter.HomeFragmentPresenter
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.toast
 
 /**
  * @author WenPing
@@ -29,11 +32,14 @@ class HomeFragment : Fragment() {
     val homeAdapter by lazy {
         HomeAdapter(activity)
     }
-
+    lateinit var homePresenter: HomeFragmentPresenter
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View = View.inflate(activity, R.layout.fragment_home, null)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        homePresenter = HomeFragmentPresenter(this)
+
         rv_home.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = homeAdapter
@@ -67,10 +73,11 @@ class HomeFragment : Fragment() {
 
 
     private fun initData() {
-        for (i in 0 until 100) {
-            data.add("我是商家" + i)
-        }
-        homeAdapter.setData(data)
+//        for (i in 0 until 100) {
+//            data.add("我是商家" + i)
+//        }
+        homePresenter.getHomeInfo()
+//        homeAdapter.setData(allList)
 
     }
 
@@ -81,6 +88,21 @@ class HomeFragment : Fragment() {
     fun Int.dp2px(): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 toFloat(), resources.displayMetrics).toInt()
+
+    }
+
+    val allList: ArrayList<Seller> = ArrayList()
+
+    fun onHomeSuccess(nearbyList:List<Seller>,otherSellers:List<Seller>) {
+        toast("成功")
+        allList.clear()
+        allList.addAll(nearbyList)
+        allList.addAll(otherSellers)
+        homeAdapter.setData(allList)
+    }
+
+    fun onHomeFailed() {
+        toast("失败")
 
     }
 

@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import com.wenping.autoloayout.ktolintakeout.R
+import com.wenping.autoloayout.ktolintakeout.model.Seller
+import kotlinx.android.synthetic.main.item_seller.view.*
 
 /**
  * Author WenPing
@@ -17,8 +19,8 @@ class SellerHolderView(context: Context?, attrs: AttributeSet? = null) : Relativ
         View.inflate(context, R.layout.item_seller, this)
     }
 
-    fun bindView(get: String) {
-
+    fun bindView(seller: Seller) {
+        tv_title.text = seller.name
 
     }
 }

@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\AndroidProjects\AkotlinProjects\kotlinTakeOut\app\app.iml" filepath="E:\AndroidProjects\AkotlinProjects\kotlinTakeOut\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/kotlinTakeOut.iml" filepath="$PROJECT_DIR$/kotlinTakeOut.iml" />
-      <module fileurl="file://E:\AndroidProjects\AkotlinProjects\kotlinTakeOut\kotlinTakeOut.iml" filepath="E:\AndroidProjects\AkotlinProjects\kotlinTakeOut\kotlinTakeOut.iml" />
     </modules>
   </component>
 </project>

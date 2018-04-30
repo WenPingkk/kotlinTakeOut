@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.wenping.autoloayout.ktolintakeout.model.Seller
 import com.wenping.autoloayout.ktolintakeout.ui.widget.SellerHolderView
 import com.wenping.autoloayout.ktolintakeout.ui.widget.TitleHolderView
 
@@ -21,9 +22,9 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
     }
 
     //mDatas要给改成可变的，因为在setF方法中实现可变
-    var mDatas: ArrayList<String> = ArrayList()
+    var mDatas: ArrayList<Seller> = ArrayList()
 
-    fun setData(data: ArrayList<String>) {
+    fun setData(data: ArrayList<Seller>) {
         this.mDatas = data
         notifyDataSetChanged()
     }
@@ -58,7 +59,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         when (itemViewType) {
             TYPE_TITLE -> {
                 val titleHolderView = holder.itemView as TitleHolderView
-                titleHolderView.bindView(mDatas.get(0))
+                titleHolderView.bindView("xxx")
             }
             TYPE_SELLER ->{
                 val sellerHolderView = holder.itemView as SellerHolderView
