@@ -3,13 +3,12 @@ package com.wenping.autoloayout.ktolintakeout.ui.fragment
 import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wenping.autoloayout.ktolintakeout.R
 import com.wenping.autoloayout.ktolintakeout.adapter.HomeAdapter
-import org.jetbrains.anko.find
+import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * @author WenPing
@@ -19,18 +18,21 @@ import org.jetbrains.anko.find
  */
 class HomeFragment : Fragment() {
 
-    lateinit var homeAdapter:HomeAdapter
+    val homeAdapter by lazy {
+        HomeAdapter(activity)
+    }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            View.inflate(activity, R.layout.fragment_home, null)
+//        val rvHome = view.find<RecyclerView>(R.id.rv_home)
 
-        val view = View.inflate(activity, R.layout.fragment_home, null)
-        val rvHome = view.find<RecyclerView>(R.id.rv_home)
-        homeAdapter = HomeAdapter(activity)
-        rvHome.apply {
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        rv_home.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = homeAdapter
         }
-        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -14,6 +14,12 @@ import com.wenping.autoloayout.ktolintakeout.R
  */
 class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    //伴生的单利；访问直接通过类.常量名
+    companion object {
+        val TYPE_TITLE = 0
+        val TYPE_SELLER = 1
+    }
+
     //mDatas要给改成可变的，因为在setF方法中实现可变
     var mDatas: ArrayList<String> = ArrayList()
 
@@ -22,21 +28,53 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = mDatas.size
+    override fun getItemCount(): Int {
+        if (mDatas.size > 0) {
+            return mDatas.size + 1
+        } else {
+            return 0
+        }
+    }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-
-        val homeItemViewholder = holder as HomeItemViewholder
-        homeItemViewholder.bindView(mDatas[position])
+    override fun getItemViewType(position: Int): Int {
+        if (position == 0) {
+            return TYPE_TITLE
+        } else {
+            return TYPE_SELLER
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        val itemView = View.inflate(context, R.layout.item_home_common, null)
-        return HomeItemViewholder(itemView)
+        when (viewType) {
+            TYPE_TITLE -> return TitleHolder(View.inflate(context, R.layout.item_home_common, null))
+            TYPE_SELLER -> return SellerHolder(View.inflate(context, R.layout.item_home_common, null))
+            else -> return TitleHolder(View.inflate(context, R.layout.item_home_common, null))
+        }
+    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+
+        val itemViewType = getItemViewType(position)
+        when (itemViewType) {
+            TYPE_TITLE ->(holder as TitleHolder).bindView("我是头布局")
+            TYPE_SELLER->(holder as SellerHolder).bindView(mDatas[position-1])
+        }
     }
 
-    inner class HomeItemViewholder(item:View) : RecyclerView.ViewHolder(item) {
-        val textView:TextView
+    inner class SellerHolder(item: View) : RecyclerView.ViewHolder(item) {
+        val textView: TextView
+
+        init {
+            textView = item.findViewById(R.id.tv)
+        }
+
+        fun bindView(data: String) {
+            textView.text = data
+        }
+    }
+
+    inner class TitleHolder(item: View) : RecyclerView.ViewHolder(item) {
+        val textView: TextView
+
         init {
             textView = item.findViewById(R.id.tv)
         }
@@ -46,4 +84,5 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         }
 
     }
+
 }
