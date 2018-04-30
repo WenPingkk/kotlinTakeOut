@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ class HomeFragment : Fragment() {
     var data: ArrayList<String> = ArrayList()
     var sum = 0
     var distance = 0
-    var alpha = 0
+    var alphas = 0
     val homeAdapter by lazy {
         HomeAdapter(activity)
     }
@@ -36,6 +37,25 @@ class HomeFragment : Fragment() {
         rv_home.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = homeAdapter
+            setOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    sum += dy
+                    Log.e("Tag", sum.toString())
+
+                    if (sum > distance) {
+                        alphas = 255
+                    } else {
+                        alphas = 55 + 200 * sum / distance
+                        ll_title_container.setBackgroundColor(
+                                Color.argb(
+                                        alphas, 0x31, 0x90, 0xe8
+                                )
+                        )
+                    }
+
+                }
+            })
         }
         distance = 120.dp2px()
     }
@@ -52,29 +72,6 @@ class HomeFragment : Fragment() {
         }
         homeAdapter.setData(data)
 
-        rv_home.setOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                sum += dy
-//                Log.e("Tag",sum.toString())
-
-                if (sum > distance) {
-                    alpha = 255
-                } else {
-                    alpha = 55+200*sum/distance
-                    ll_title_container.setBackgroundColor(
-                            Color.argb(
-                                    alpha,0x31,0x90,0xe8
-                            )
-                    )
-                }
-
-            }
-        })
     }
 
     /**
