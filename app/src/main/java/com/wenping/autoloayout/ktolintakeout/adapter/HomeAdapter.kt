@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.wenping.autoloayout.ktolintakeout.R
+import com.wenping.autoloayout.ktolintakeout.ui.widget.SellerHolderView
+import com.wenping.autoloayout.ktolintakeout.ui.widget.TitleHolderView
 
 /**
  * Author WenPing
@@ -32,7 +32,7 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
         if (mDatas.size > 0) {
             return mDatas.size + 1
         } else {
-            return 0
+            return 1
         }
     }
 
@@ -46,43 +46,28 @@ class HomeAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.View
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
         when (viewType) {
-            TYPE_TITLE -> return TitleHolder(View.inflate(context, R.layout.item_home_common, null))
-            TYPE_SELLER -> return SellerHolder(View.inflate(context, R.layout.item_home_common, null))
-            else -> return TitleHolder(View.inflate(context, R.layout.item_home_common, null))
+            TYPE_TITLE -> return TitleHolder(TitleHolderView(context))
+            TYPE_SELLER -> return SellerHolder(SellerHolderView(context))
+            else -> return return TitleHolder(TitleHolderView(context))
         }
     }
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val itemViewType = getItemViewType(position)
         when (itemViewType) {
-            TYPE_TITLE ->(holder as TitleHolder).bindView("我是头布局")
-            TYPE_SELLER->(holder as SellerHolder).bindView(mDatas[position-1])
+            TYPE_TITLE -> {
+                val titleHolderView = holder.itemView as TitleHolderView
+                titleHolderView.bindView(mDatas.get(0))
+            }
+            TYPE_SELLER ->{
+                val sellerHolderView = holder.itemView as SellerHolderView
+                sellerHolderView.bindView(mDatas.get(position - 1))
+            }
         }
     }
 
-    inner class SellerHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val textView: TextView
-
-        init {
-            textView = item.findViewById(R.id.tv)
-        }
-
-        fun bindView(data: String) {
-            textView.text = data
-        }
-    }
-
-    inner class TitleHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val textView: TextView
-
-        init {
-            textView = item.findViewById(R.id.tv)
-        }
-
-        fun bindView(data: String) {
-            textView.text = data
-        }
-
-    }
+    inner class SellerHolder(item: View) : RecyclerView.ViewHolder(item) {}
+    inner class TitleHolder(item: View) : RecyclerView.ViewHolder(item) {}
 
 }

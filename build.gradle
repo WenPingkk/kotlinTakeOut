@@ -1,7 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
+    ext {
+        kotlin_version = '1.2.31'
+        daggerVersion = '2.9'
+        retrofitVersion = '2.3.0'
+        rxjavaVersion = '2.1.7'
+        rxandroidVersion = '2.0.1'
+        okhttp3Version = '3.9.1'
+    }
     repositories {
         google()
         jcenter()
