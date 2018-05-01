@@ -8,7 +8,7 @@ import android.widget.RelativeLayout
 import com.squareup.picasso.Picasso
 import com.wenping.autoloayout.ktolintakeout.R
 import com.wenping.autoloayout.ktolintakeout.model.Seller
-import com.wenping.autoloayout.ktolintakeout.presenter.HomeFragmentPresenter
+import com.wenping.autoloayout.ktolintakeout.presenter.NetPresenter.Companion.Host
 import kotlinx.android.synthetic.main.item_seller.view.*
 
 /**
@@ -26,7 +26,7 @@ class SellerHolderView(context: Context?, attrs: AttributeSet? = null) : Relativ
         tv_title.text = seller.name
         var iconStr = seller.icon
         val indexOf = iconStr!!.indexOf("8080")
-        iconStr = HomeFragmentPresenter.Host+iconStr!!.substring(indexOf)
+        iconStr = Host+iconStr!!.substring(indexOf)
         Log.e("tag",iconStr)
         Picasso
                 .with(context)
