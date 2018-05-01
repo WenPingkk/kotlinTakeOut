@@ -10,10 +10,13 @@ import cn.smssdk.EventHandler
 import cn.smssdk.SMSSDK
 import com.heima.takeout.utils.SMSUtil
 import com.wenping.autoloayout.ktolintakeout.R
+import com.wenping.autoloayout.ktolintakeout.dagger2.component.DaggerLoginActivityComponent
+import com.wenping.autoloayout.ktolintakeout.dagger2.module.LoginActivityModule
 import com.wenping.autoloayout.ktolintakeout.model.User
 import com.wenping.autoloayout.ktolintakeout.presenter.LoginActivityPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 /**
  * Author WenPing
@@ -30,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     var time = 60
-
+    @Inject
     lateinit var loginActivityPresenter: LoginActivityPresenter
 
     val handler = @SuppressLint("HandlerLeak")
@@ -82,7 +85,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        loginActivityPresenter = LoginActivityPresenter(this)
+//        loginActivityPresenter = LoginActivityPresenter(this)
+//        DaggerHomeFragmentComponent.builder().
+// homeFragmentModule(HomeFragmentModule(this)).build().inject(this)
+
+        DaggerLoginActivityComponent.builder()
+                .loginActivityModule(LoginActivityModule(this)).build().inject(this)
         initListener()
 
         //初测监听器
@@ -106,11 +114,11 @@ class LoginActivity : AppCompatActivity() {
         iv_login.setOnClickListener{
             val phoneNumber = et_user_phone.text.toString().trim()
             val code = et_user_code.text.toString().trim()
-            if (SMSUtil.judgePhoneNums(this, phoneNumber) and code.isNotEmpty()) {
-                SMSSDK.submitVerificationCode("86",phoneNumber,code)
-
+//            if (SMSUtil.judgePhoneNums(this, phoneNumber) and code.isNotEmpty()) {
+//                SMSSDK.submitVerificationCode("86",phoneNumber,code)
+//                loginActivityPresenter.loginByPhone(phoneNumber)
+//            }
                 loginActivityPresenter.loginByPhone(phoneNumber)
-            }
         }
     }
 
