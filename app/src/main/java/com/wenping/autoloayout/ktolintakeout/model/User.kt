@@ -5,4 +5,11 @@ package com.wenping.autoloayout.ktolintakeout.model
  * CreateTime 2018/5/1.
  * Description:
  */
-data class User(val id: String, val name: String, val balance: Float, val discount: Int, val integral: Int, val phone: String)
+ class User(){
+    var id: Int =0
+    val name: String?=null
+    val balance: Float=0f
+    val discount: Int=0
+    val integral: Int=0
+    val phone: String ?=null
+}
